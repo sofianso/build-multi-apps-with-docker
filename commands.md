@@ -53,13 +53,13 @@ docker network ls
 docker network create goals-network
 ```
 
-## Running Containers Within Same Network
+# Running Containers Within Same Network
 You can now run the following containers in the same network without the need of publishing the ports.
-# runs mongodb within the same network
+## runs mongodb within the same network
 ```bash
 docker run --name mongodb --rm -d --network goals-network mongo
 ```
-# runs backend within the same network
+## runs backend within the same network
 1. You must change the `mongoose connect` line in `app.js` from `host.docker.internal` to `mongodb` since it is using the same network.
 2. Rebuild the container with:  
 ```bash
@@ -70,10 +70,17 @@ docker build -t goals-node .
 ```bash
 docker run --name goals-backend -d --rm -p 3000:3000 --network goals-network goals-node
 ```
-# runs frontend within the same network
-1. As for **frontend**, do not to modify `localhost` to `goals-backend` because it is the only way for React to communicate. Instead, you need to publish `-p` the backend container with the port 80 with command above.
+## runs frontend within the same network
+1. As for **frontend**, you do not to modify `localhost` to `goals-backend` because it is the only way for React to communicate. Instead, you need to publish `-p` the backend container with the port 80 with command above.
 ```bash
 docker run --name goals-frontend -d --rm ---network goals-network -p 3000:3000  -it goals-react
+```
+# Adding Data Persistance to MongoDB with Volumes
+The goal of adding volumes is to make sure that data created is not taken down when container is stopped.
+1. By adding `-v data:/data/db` it allows Docker to store data in the host machine. 
+2. Adding `-e MONGO_INITDB_ROOT_USERNAME=sofian -e MONGO_INITDB_ROOT_PASSWORD=password` allows authentication, you have to modify the **backend** (mongoose connect line) `mongodb://mongodb:27017/course-goals` from to `mongodb://sofian:password@mongodb:27017/course-goals`
+```bash
+docker run --name mongodb -v data:/data/db --rm -d --network goals-network -e MONGO_INITDB_ROOT_USERNAME=sofian -e MONGO_INITDB_ROOT_PASSWORD=password mongo
 ```
 
 
