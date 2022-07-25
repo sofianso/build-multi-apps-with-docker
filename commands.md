@@ -71,7 +71,7 @@ docker build -t goals-node .
 docker run --name goals-backend -d --rm -p 3000:3000 --network goals-network goals-node
 ```
 # runs frontend within the same network
-1. As for **frontend**, do not to modify `localhost` to `goals-backend` because it is the only way for React to communicate. Instead, you need to publish `-p` the backend container with the port 80 with command above.
+1. As for **frontend**, you do not to modify `localhost` to `goals-backend` because it is the only way for React to communicate. Instead, you need to publish `-p` the backend container with the port 80 with command above.
 ```bash
 docker run --name goals-frontend -d --rm ---network goals-network -p 3000:3000  -it goals-react
 ```
