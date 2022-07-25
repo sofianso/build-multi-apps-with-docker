@@ -1,5 +1,4 @@
 # .dockerignore prevents Docker from rebuilding the image which results in faster builds.
-
 node_modules
 Dockerfile
 .git
