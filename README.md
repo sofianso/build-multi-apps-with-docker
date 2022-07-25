@@ -5,12 +5,12 @@ https://onedigital.udemy.com/course/docker-kubernetes-the-practical-guide/learn/
 
 # Goals
 ## MongoDB
-Data must persist
-Access should be limited
+1. Data must persist
+2. Access should be limited
 
 ## NodeJS:
-Data must persist (log files)
-Live source code update
+1. Data must persist (log files)
+2. Live source code update
 
 ## Frontend:
-Live source code update
+1. Live source code update
